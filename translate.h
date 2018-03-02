@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <QMessageBox>
+#include <QMap>
 
 class translate
 {
@@ -13,6 +14,8 @@ public:
     int pos_begin;
     int pos_end;
     QString output;
+    QVector< QMap<QString , float> > vector;
+    QMap<QString,int> all_variables;
     QVector<float> coefs;
     QVector<QString> variables;
 
