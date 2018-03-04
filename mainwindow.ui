@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>775</width>
-    <height>363</height>
+    <width>1033</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,23 +23,46 @@
       <height>311</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>20</pointsize>
+     </font>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>10</y>
-      <width>361</width>
-      <height>311</height>
+      <y>170</y>
+      <width>621</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>91</pointsize>
+      <pointsize>50</pointsize>
      </font>
     </property>
     <property name="text">
      <string>run</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>10</y>
+      <width>621</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

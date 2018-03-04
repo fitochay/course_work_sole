@@ -17,46 +17,35 @@ void MainWindow::on_pushButton_clicked()
 {
     //QMessageBox message;
     tr1.set_data(ui->textEdit->toPlainText());
-    tr1.parse();
+    int parse = tr1.parse();
+    if ( parse == 0 )
+    {
+        int gauss = tr1.gauss();
+        if ( gauss == 0 )
+        {
+            QString result;
+            for ( QMap< QString, float >::iterator it = tr1.results.begin(); it != tr1.results.end(); it ++)
+            {
+                result += it.key() + ": " + QString::number( it.value() ) + "\n";
+            }
+            ui->label->setText(result);
+        }
+        else if ( gauss == 1 )
+        {
+            ui->label->setText(tr1.error_text);
+        }
+    }
+    else if ( parse == 1 )
+    {
+        //подсвечивать слов[о,а]
+        ui->label->setText(tr1.error_text);
+    }
+    else if ( parse == -1 )
+    {
+        //подсвечивать букву в слове
+        ui->label->setText(tr1.error_text);
+    }
 //    message.setText(tr1.output);
 //    message.show();
 //    QMessageBox::information(this, tr("Информация"), tr1.output);
-    set_matrix();
-}
-
-bool MainWindow::set_matrix()
-{
-    //мап, чтобы не считать сколько уникальных переменных
-    QMap<QString, int> temp_map; //нормально бы сделать
-    for (int i = 0; i < tr1.variables.size(); i ++)
-    {
-        temp_map.insert(tr1.variables[i], 0);
-    }
-
-    int n = temp_map.size();
-    matrix = new float*[n];
-    for (int i = 0; i < n; i++)
-    {
-        matrix[i] = new float[n];
-    }
-
-    int k = 0;
-    for (int i = 0; i < n; i ++) //n???
-    {
-        for (int j = 0; j < n; j ++)
-        {
-            matrix[i][j] = tr1.coefs[k++];
-        }
-    }
-
-    g = new gauss(&n);
-    g->set_matrix(matrix);
-    /* как вообще задавать эту матрицу?
-     * может быть нарушен порядок
-     * может отсутствовать какая-то переменная (коэф == 0)
-     * как-то надо упорядочить переменные с коэффициентами
-     * перед тем как создавать матрицу коэффициетов
-     */
-    //g->calculate();
-    return true;
 }

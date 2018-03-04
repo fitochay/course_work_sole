@@ -14,15 +14,20 @@ public:
     int pos_begin;
     int pos_end;
     QString output;
+    QVector<QString> temp_vector;
     QVector< QMap<QString , float> > vector;
     QMap<QString,int> all_variables;
-    QVector<float> coefs;
-    QVector<QString> variables;
+    QMap< QString, float > results;
+
+    int error_pos[2];
+    QString error_text;
 
     translate();
 
     void set_data(QString);
-    bool parse();
+    int parse();
+
+    int gauss();
 };
 
 #endif // TRANSLATE_H

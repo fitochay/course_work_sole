@@ -24,9 +24,7 @@ private slots:
 
 private:
     translate tr1;
-    gauss *g;
-    float **matrix;
-    bool set_matrix();
+    QMessageBox message;
 
     Ui::MainWindow *ui;
 };
