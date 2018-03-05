@@ -72,6 +72,7 @@ void MainWindow::on_pushButton_clicked()
         ui->label->setText(tr1.error_text);
 
         QString temp_letter;
+        ui->textEdit->clear();
         int i = 0, j = 0;
         while ( i < tr1.temp_vector.size() )
         {
@@ -91,6 +92,7 @@ void MainWindow::on_pushButton_clicked()
                 }
                 j ++;
             }
+            j = 0;
             ui->textEdit->insertPlainText(" ");
             if ( tr1.temp_vector[i] == "begin" || tr1.temp_vector[i] == "{" ||
                   tr1.temp_vector[i] == ";" || tr1.temp_vector[i] == "}" || tr1.temp_vector[i] == "end" )

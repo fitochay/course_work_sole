@@ -146,6 +146,8 @@ int translate::parse()
                                 {
                                     str_temp_number += temp_vector[i][j];
                                 }
+                                if ( temp_vector[i][j] == "." )
+                                    dot = true;
                             }
                             else
                             {
@@ -342,8 +344,8 @@ int translate::parse()
                         }
                         if ( temp_vector[i-2] != "}" || temp_vector[i-1] != "end")
                         {
-                            error_pos[0] = i-2;
-                            error_pos[1] = i-1;
+                            error_pos[0] = temp_vector.size() -2;
+                            error_pos[1] = temp_vector.size() -1;
                             error_text = "[Error] Конструкция должна заканчиваться на '} end'!";
                             return 1;
                         }
