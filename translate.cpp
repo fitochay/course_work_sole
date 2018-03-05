@@ -121,7 +121,8 @@ int translate::parse()
                 while ( i < temp_vector.size() - 2)
                 {
                     while ( i < temp_vector.size() - 2 && temp_vector[i] != ";" &&
-                            temp_vector[i] != "=" && temp_vector[i] != "*" && temp_vector[i] != "/" && temp_vector[i] != "{" && temp_vector[i] != "}" )
+                            temp_vector[i] != "=" && temp_vector[i] != "*" && temp_vector[i] != "/" &&
+                            temp_vector[i] != "{" && temp_vector[i] != "}" )
                     {
                         j = 0;
 
@@ -300,6 +301,13 @@ int translate::parse()
                                 error_text = "[Error] В коэффициенте не может быть пробела!";
                                 return 1;
                             }
+                            else if ( temp_vector[i] == "}" )
+                            {
+                                error_pos[0] = i;
+                                error_pos[1] = i;
+                                error_text = "[Error] Уравнение должно заканчиваться ';'!";
+                                return 1;
+                            }
                             else
                             {
                                 error_pos[0] = i-1;
@@ -329,16 +337,23 @@ int translate::parse()
                         {
                             error_pos[0] = temp_vector.size()-2;
                             error_pos[1] = temp_vector.size()-2;
-                            error_text = "[Error] В контсрукции не может быть несколько '}'!";
+                            error_text = "[Error] В конструкции не может быть несколько '}'!";
                             return 1;
                         }
                         if ( temp_vector[i-2] != "}" || temp_vector[i-1] != "end")
                         {
-                            error_pos[0] = temp_vector[i-2];
-                            error_pos[1] = temp_vector[i-1];
+                            error_pos[0] = i-2;
+                            error_pos[1] = i-1;
                             error_text = "[Error] Конструкция должна заканчиваться на '} end'!";
                             return 1;
                         }
+                    }
+                    else if ( temp_vector[i] == ";" && temp_vector[i-1] == ";" )
+                    {
+                        error_pos[0] = i-1;
+                        error_pos[1] = i;
+                        error_text = "[Error] Не может идти несколько ';' подряд!";
+                        return 1;
                     }
                 }
 

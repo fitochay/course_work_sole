@@ -58,11 +58,14 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <pointsize>15</pointsize>
      </font>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
