@@ -193,7 +193,7 @@ int translate::parse()
                                 error_text = "[Error] В коэффициенте не может быть пробела!";
                                 return 1;
                             }
-                            else
+                            else if ( temp_vector[i+1] != ";" )
                             {
                                 error_pos[0] = i;
                                 error_pos[1] = i + 1;
@@ -223,20 +223,26 @@ int translate::parse()
                             {
                                 if ( temp_vector[i+2] == "+" || temp_vector[i+2] == "-" || temp_vector[i+2] == "=" )
                                 {
-                                    error_pos[0] = i + 2;
-                                    error_pos[1] = i + 2;
-                                    error_text = "[Error] После '+', '-', '=' может идти только переменная или коэффициент!";
-                                    return 1;
+                                    if ( !(temp_vector[i+1] == '=' && temp_vector[i+2] == '-') )
+                                    {
+                                        error_pos[0] = i + 2;
+                                        error_pos[1] = i + 2;
+                                        error_text = "[Error] После '+', '-', '=' может идти только переменная или коэффициент!";
+                                        return 1;
+                                    }
                                 }
 
                             }
                             else if ( temp_vector[i+1] != "+" && temp_vector[i+1] != "-" && temp_vector[i+1] != "=" )
                             {
-                                QString asd = temp_vector[i+1];
-                                error_pos[0] = i + 1;
-                                error_pos[1] = i + 1;
-                                error_text = "[Error] После переменной могут идти только '+', '-' или '='!";
-                                return 1;
+                                if ( !( ( temp_vector[i-1] == "=" || temp_vector[i-2] == "=" ) && temp_vector[i+1] == ";") )
+                                {
+                                    QString asd = temp_vector[i+1];
+                                    error_pos[0] = i + 1;
+                                    error_pos[1] = i + 1;
+                                    error_text = "[Error] После переменной могут идти только '+', '-' или '='!";
+                                    return 1;
+                                }
                             }
                         }
 
@@ -272,12 +278,17 @@ int translate::parse()
                         i ++;
                     }
 
+//                    if ( (temp_vector[i-2] == "=" || temp_vector[i-3] == "=") && temp_vector[i] == ";")
+//                    {
+//                        i++;
+//                    }
+
                     if ( temp_vector[i] == "=")
                     {
                         i ++; int j;
                         for ( j = 0; j < temp_vector[i].size(); j ++)
                         {
-                            if ( !( temp_vector[i][j] >= '0' && temp_vector[i][j] <= '9' ) )
+                            if ( !( ( temp_vector[i][j] >= '0' && temp_vector[i][j] <= '9' ) || temp_vector[i] == "-") )
                             {
                                 error_pos[0] = i;
                                 error_pos[1] = j;
@@ -286,7 +297,16 @@ int translate::parse()
                             }
                         }
 
-                        vector[k].insert("=", temp_vector[i].toFloat());
+                        if ( temp_vector[i] != "-" )
+                        {
+                            vector[k].insert("=", temp_vector[i].toFloat());
+                        }
+                        else
+                        {
+                            float t = temp_vector[++i].toFloat();
+                            t = 0 - t;
+                            vector[k].insert("=", t);
+                        }
 
                         if ( temp_vector[++ i] == ";" )
                         {
@@ -296,7 +316,7 @@ int translate::parse()
                         }
                         else
                         {
-                            if ( temp_vector[i][0] >= '0' && temp_vector[i][0] <= '9' )
+                            if ( ( temp_vector[i][0] >= '0' && temp_vector[i][0] <= '9' ) && temp_vector[i-1] != "-" )
                             {
                                 error_pos[0] = i - 1;
                                 error_pos[1] = i;
@@ -310,7 +330,7 @@ int translate::parse()
                                 error_text = "[Error] Уравнение должно заканчиваться ';'!";
                                 return 1;
                             }
-                            else
+                            else if ( temp_vector[i-1] != "-" )
                             {
                                 error_pos[0] = i-1;
                                 error_pos[1] = i-1;
